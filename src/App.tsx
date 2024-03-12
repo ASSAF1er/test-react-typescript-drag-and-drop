@@ -35,29 +35,32 @@ function App() {
     
   )
   return (
-    <div className="w-screen h-screen flex flex-col justify-center items-center ">
-      <form action="" className="flex">
+    <div className=" w-screen h-screen flex flex-col gap-5 pt-[5%] items-center bg-green-100 ">
+     <p className="text-[35px] font-800 mb-10">Todo App with drag and drop.</p> 
+     <form action="" className="flex">
         <input
           value={todo}
           onChange={(e) => setTodo(e.target.value)}
           type="text"
-          className="border border-gray-300 rounded-sm active:border-gray-400 focus:outline-none text-gray-600 text-[18px] py-1 px-2 "
+          placeholder="new task"
+          className="bg-white border border-gray-400 rounded-sm active:border-gray-400 focus:outline-none text-[18px] py-1 px-2 "
         />
         <button
           onClick={(e) => {
             e.preventDefault();
+            if (todo.trim()==="")return;
             setTasks((prev: Object[]) => [
               ...prev,
               { id: tasks.length + 1, title: todo },
             ]);
             setTodo("");
           }}
-          className="py-2 px-8 border rounded-sm bg-gray-300"
+          className="py-2 px-8 border rounded-sm bg-gray-700 text-white border-ray-700"
         >
           Add
         </button>
       </form>
-      <Message name="sandra">hello</Message>
+     
       <DndContext sensors={sensors} onDragEnd={handleDragEnd} collisionDetection={closestCorners}>
         <TodosContainer tasks={tasks} />
       </DndContext>
