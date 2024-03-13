@@ -24,20 +24,28 @@ function App() {
   const getTaskPos = (id: number) =>
     tasks.findIndex((task: taskType) => task.id === id);
 
-  const handleDragEnd = (event:DragEndEvent) => {
+  const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
     if (active.id === over?.id) return;
     setTasks((tasks: taskType[]) => {
       const originalPos = getTaskPos(active.id as number);
-      const newPos = getTaskPos(over?.id as number );
+      const newPos = getTaskPos(over?.id as number);
 
       return arrayMove(tasks, originalPos, newPos);
     });
   };
 
   const sensors = useSensors(
-    useSensor(PointerSensor),
-    useSensor(TouchSensor),
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 0.01,
+      },
+    }),
+    useSensor(TouchSensor, {
+      activationConstraint: {
+        distance: 0.01,
+      },
+    }),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
     }),
@@ -78,7 +86,7 @@ function App() {
       >
         <TodosContainer tasks={tasks} />
       </DndContext>
-      <footer className="absolute bottom-3 right-3 sm:right-20">
+      <footer className="absolute bottom-3 right-3 sm:right-20 text-gray-600">
         coded with 💜 by Assaf
       </footer>
     </div>
