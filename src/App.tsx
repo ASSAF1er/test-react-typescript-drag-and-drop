@@ -38,13 +38,13 @@ function App() {
    
     <div className=" w-screen h-screen flex flex-col gap-5 pt-[15%] sm:pt-[5%] px-3 items-center bg-green-100 ">
      <p className=" text-[20px] sm:text-[35px] font-800 mb-10">Todo App with drag and drop.</p> 
-     <form action="" className="flex w-full px-3 justify-center">
+     <form action="" className="flex w-full px-1 justify-center">
         <input
           value={todo}
           onChange={(e) => setTodo(e.target.value)}
           type="text"
           placeholder="new task"
-          className=" w-[50%] sm:w-[400px] bg-white border border-gray-400 rounded-sm active:border-gray-400 focus:outline-none text-[16px] sm:text-[18px] py-1 px-2 "
+          className=" w-[100%] sm:w-[400px] bg-white border border-gray-400 rounded-sm active:border-gray-400 focus:outline-none text-[16px] sm:text-[18px] py-1 px-2 "
         />
         <button
           onClick={(e) => {
@@ -65,6 +65,7 @@ function App() {
       <DndContext sensors={sensors} onDragEnd={handleDragEnd} collisionDetection={closestCorners}>
         <TodosContainer tasks={tasks}  />
       </DndContext>
+      <footer className="absolute bottom-3 right-3 sm:right-20">coded with 💜  by Assaf</footer>
     </div>
     
   );
