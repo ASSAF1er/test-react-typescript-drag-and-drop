@@ -1,26 +1,32 @@
-import Message from "./components/Message";
 import { useState } from "react";
 
-import { DndContext, KeyboardSensor, PointerSensor, TouchSensor, closestCorners, useSensor, useSensors } from "@dnd-kit/core";
+import {
+  DndContext,
+  KeyboardSensor,
+  PointerSensor,
+  TouchSensor,
+  closestCorners,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
 
 import TodosContainer from "./components/TodosContainer";
 import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 import { useContext } from "react";
-import {TasksContext} from './utils/TasksContext'
-
+import { TasksContext, TasksContextType, taskType } from "./utils/TasksContext";
 
 function App() {
-  
-  const {tasks,setTasks}=useContext(TasksContext)
+  const { tasks, setTasks } = useContext(TasksContext) as TasksContextType;
   const [todo, setTodo] = useState<string>("");
 
   //function that finds the position of an element in the array
-  const getTaskPos = (id) => tasks.findIndex((task) => task.id === id);
- 
+  const getTaskPos = (id: number) =>
+    tasks.findIndex((task: taskType) => task.id === id);
+
   const handleDragEnd = (event) => {
     const { active, over } = event;
     if (active.id === over.id) return;
-    setTasks((tasks) => {
+    setTasks((tasks: taskType[]) => {
       const originalPos = getTaskPos(active.id);
       const newPos = getTaskPos(over.id);
 
@@ -28,17 +34,19 @@ function App() {
     });
   };
 
-  const sensors=useSensors(
+  const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(TouchSensor),
-    useSensor(KeyboardSensor,{coordinateGetter:sortableKeyboardCoordinates})
-    
-  )
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    }),
+  );
   return (
-   
     <div className=" w-screen h-screen flex flex-col gap-5 pt-[15%] sm:pt-[5%] px-3 items-center bg-green-100 ">
-     <p className=" text-[20px] sm:text-[35px] font-800 mb-10">Todo App with drag and drop.</p> 
-     <form action="" className="flex w-full px-1 justify-center">
+      <p className=" text-[20px] sm:text-[35px] font-800 mb-10">
+        Todo App with drag and drop.
+      </p>
+      <form action="" className="flex w-full px-1 justify-center">
         <input
           value={todo}
           onChange={(e) => setTodo(e.target.value)}
@@ -49,10 +57,10 @@ function App() {
         <button
           onClick={(e) => {
             e.preventDefault();
-            if (todo.trim()==="")return;
-            setTasks((prev: Object[]) => [
+            if (todo.trim() === "") return;
+            setTasks((prev: taskType[]) => [
               ...prev,
-              { id: tasks.length + 1, title: todo },
+              { id: tasks.length + 1, title: todo, completed: false },
             ]);
             setTodo("");
           }}
@@ -61,13 +69,18 @@ function App() {
           Add
         </button>
       </form>
-     
-      <DndContext sensors={sensors} onDragEnd={handleDragEnd} collisionDetection={closestCorners}>
-        <TodosContainer tasks={tasks}  />
+
+      <DndContext
+        sensors={sensors}
+        onDragEnd={handleDragEnd}
+        collisionDetection={closestCorners}
+      >
+        <TodosContainer tasks={tasks} />
       </DndContext>
-      <footer className="absolute bottom-3 right-3 sm:right-20">coded with 💜  by Assaf</footer>
+      <footer className="absolute bottom-3 right-3 sm:right-20">
+        coded with 💜 by Assaf
+      </footer>
     </div>
-    
   );
 }
 
