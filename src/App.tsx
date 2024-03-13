@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import {
   DndContext,
+  DragEndEvent,
   KeyboardSensor,
   PointerSensor,
   TouchSensor,
@@ -23,12 +24,12 @@ function App() {
   const getTaskPos = (id: number) =>
     tasks.findIndex((task: taskType) => task.id === id);
 
-  const handleDragEnd = (event) => {
+  const handleDragEnd = (event:DragEndEvent) => {
     const { active, over } = event;
-    if (active.id === over.id) return;
+    if (active.id === over?.id) return;
     setTasks((tasks: taskType[]) => {
-      const originalPos = getTaskPos(active.id);
-      const newPos = getTaskPos(over.id);
+      const originalPos = getTaskPos(active.id as number);
+      const newPos = getTaskPos(over?.id as number );
 
       return arrayMove(tasks, originalPos, newPos);
     });
