@@ -18,8 +18,8 @@ export const TasksContext = createContext<TasksContextType | undefined>(
 
 function TasksContextProvider({ children }: PropsWithChildren) {
   const [tasks, setTasks] = useState<taskType[]>([
-    { id: 1, title: "go to school",completed:true },
-    { id: 2, title: " wash dishes",completed:false  },
+    { id: 1, title: "eat",completed:true },
+    { id: 2, title: " code",completed:false  },
     { id: 3, title: "take a rest",completed:false  },
   ]);
 
