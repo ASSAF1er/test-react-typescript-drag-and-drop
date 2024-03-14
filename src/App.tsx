@@ -82,7 +82,7 @@ function App() {
         Todo App with drag and drop.
       </p>
       <p className=" text-[15px] sm:text-[20px] font-400 mb-7 text-gray-500 text-center">Plan your tasks to do and boost your productivity.</p>
-      </div><form action="" className="flex w-full px-1 justify-center">
+      </div><form action="" className="flex gap-0.5 w-full px-1 justify-center">
         <input
           value={todo}
           onChange={(e) => setTodo(e.target.value)}
