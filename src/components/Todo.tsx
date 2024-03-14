@@ -37,7 +37,7 @@ function Todo({ id, title, completed }: taskType) {
       className={classNames(
         completed
           ? "bg-blue-100 hover:bg-blue-100 z-10 text-gray-400"
-          : "bg-white hover:bg-gray-100",
+          : "bg-white ",
         "w-full flex gap-2 rounded-sm   border py-3 px-2 cursor-pointer text-center touch-none shadow-md ",
       )}
     >

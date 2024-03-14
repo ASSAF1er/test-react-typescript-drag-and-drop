@@ -78,10 +78,11 @@ function App() {
   );
   return (
     <div className=" w-screen h-screen flex flex-col gap-5 pt-[15%] sm:pt-[5%] px-3 items-center bg-green-100 ">
-      <p className=" text-[20px] sm:text-[35px] font-800 mb-10">
+      <div><p className=" text-[20px] sm:text-[35px] font-800 text-center">
         Todo App with drag and drop.
       </p>
-      <form action="" className="flex w-full px-1 justify-center">
+      <p className=" text-[15px] sm:text-[20px] font-400 mb-10 text-gray-500 text-center">Plan your tasks to do and boost your productivity.</p>
+      </div><form action="" className="flex w-full px-1 justify-center">
         <input
           value={todo}
           onChange={(e) => setTodo(e.target.value)}
@@ -94,7 +95,7 @@ function App() {
           onClick={(e) => {
             handleAddTask(e);
           }}
-          className="py-2 px-8 border rounded-sm bg-gray-700 text-white border-ray-700"
+          className="py-2 px-8 border rounded-sm bg-gray-700 text-white border-gray-700"
         >
           Add
         </button>
