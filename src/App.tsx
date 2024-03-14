@@ -20,6 +20,30 @@ function App() {
   const { tasks, setTasks } = useContext(TasksContext) as TasksContextType;
   const [todo, setTodo] = useState<string>("");
 
+  //function that returns the highest id in an array of objects
+
+  const findMaxId = (): number => {
+    return tasks.length === 0 ? 0 : Math.max(...tasks.map((task) => task.id));
+  };
+
+  //Adding a task
+  const handleAddTask = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
+    e.preventDefault();
+    const newId = findMaxId();
+    if (todo.trim() === "") return;
+
+    const newList = [
+      ...tasks,
+      { id: newId + 1, title: todo, completed: false },
+    ];
+
+    setTasks(newList);
+    localStorage.setItem("tasks", JSON.stringify(newList));
+    setTodo("");
+  };
+
   //function that finds the position of an element in the array
   const getTaskPos = (id: number) =>
     tasks.findIndex((task: taskType) => task.id === id);
@@ -27,12 +51,14 @@ function App() {
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
     if (active.id === over?.id) return;
-    setTasks((tasks: taskType[]) => {
+    
       const originalPos = getTaskPos(active.id as number);
       const newPos = getTaskPos(over?.id as number);
-
-      return arrayMove(tasks, originalPos, newPos);
-    });
+      const newList=arrayMove(tasks, originalPos, newPos)
+      setTasks(newList)
+      localStorage.setItem("tasks", JSON.stringify(newList));
+      return newList;
+    
   };
 
   const sensors = useSensors(
@@ -60,18 +86,13 @@ function App() {
           value={todo}
           onChange={(e) => setTodo(e.target.value)}
           type="text"
+          name="task"
           placeholder="new task"
           className=" w-[100%] sm:w-[400px] bg-white border border-gray-400 rounded-sm active:border-gray-400 focus:outline-none text-[16px] sm:text-[18px] py-1 px-2 "
         />
         <button
           onClick={(e) => {
-            e.preventDefault();
-            if (todo.trim() === "") return;
-            setTasks((prev: taskType[]) => [
-              ...prev,
-              { id: tasks.length + 1, title: todo, completed: false },
-            ]);
-            setTodo("");
+            handleAddTask(e);
           }}
           className="py-2 px-8 border rounded-sm bg-gray-700 text-white border-ray-700"
         >

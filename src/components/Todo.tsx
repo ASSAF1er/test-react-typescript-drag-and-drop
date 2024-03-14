@@ -11,18 +11,17 @@ function Todo({ id, title, completed }: taskType) {
   const { tasks, setTasks } = useContext(TasksContext) as TasksContextType;
 
   const handleDelete = (id: number) => {
-    const newList = tasks.filter((item: taskType) => 
-      item.id !== id
+    const newList = tasks.filter((item: taskType) => item.id !== id);
+    setTasks(newList);
+    localStorage.setItem("tasks", JSON.stringify(newList));
+  };
+
+  const handleCheck = (id: number) => {
+    const newList = tasks.map((task: taskType) =>
+      task.id === id ? { ...task, completed: !task.completed } : task,
     );
     setTasks(newList);
-    
-  };
-  const handleCheck = (id: number) => {
-    setTasks(
-      tasks.map((task: taskType) =>
-        task.id === id ? { ...task, completed: !task.completed } : task,
-      ),
-    );
+    localStorage.setItem("tasks", JSON.stringify(newList));
   };
 
   const { attributes, listeners, setNodeRef, transform, transition } =
